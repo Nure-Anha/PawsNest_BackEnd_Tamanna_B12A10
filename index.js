@@ -1,7 +1,7 @@
 const express = require ("express") ;  // hook type of mongoDB 
 const cors = require ("cors") ;   // Cors - permitted to run in localhost:5173-->frontend and localhost:3000 -->backend
 require ("dotenv").config() ;
-const port = 3000 ;
+const port = process.env.PORT || 3000 ;
 
 
 const app = express() ;
@@ -14,7 +14,7 @@ app.use(express.json())   // thats needed for post data on mongo
 // MongoDB --> Atlas --> Security --> Database & Network Access --> IP access list --> 0000
 // MongoDB --> Atlas --> Database --> Clusters --> Connect --> Drivers --> Code cpy
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://assignment10:SiNSs2HkIZqRkVG5@cluster0.aqhaj1o.mongodb.net/?appName=Cluster0"; //pass copy = paste
+const uri = process.env.MONGO_URI; //pass copy = paste
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
