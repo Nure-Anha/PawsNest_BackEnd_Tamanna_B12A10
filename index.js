@@ -78,6 +78,25 @@ async function run() {
 
 
 
+    // post
+    app.post('/listingdetails' , async(req3 , res3) => {
+      const dataBackEnd3 = req3.body ; 
+      console.log(dataBackEnd3) ;
+      // insert to database
+      const result3 = await PawsNest_addListings.insertOne(dataBackEnd3) ;
+      res3.send(result3) ;
+    })
+
+    // get
+    app.get('/listingdetails' , async(req3 , res3) => {
+      const resOrderD = await PawsNest_addListings.find().toArray() ;
+      res3.send(resOrderD) ;
+    }) 
+
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
