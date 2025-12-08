@@ -13,7 +13,7 @@ app.use(express.json())   // thats needed for post data on mongo
 // MongoDB --> Atlas --> Security --> Database & Network Access --> Add new Database user -- > pass copy 
 // MongoDB --> Atlas --> Security --> Database & Network Access --> IP access list --> 0000
 // MongoDB --> Atlas --> Database --> Clusters --> Connect --> Drivers --> Code cpy
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = process.env.MONGO_URI; //pass copy = paste
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -39,6 +39,7 @@ async function run() {
 
 
     // ****************My Part of this copy pasted code from mongo p- 1 = data transfer from front to back = Called POST SERVICE **********************
+    // Post Add Listings data to backend 
     app.post('/addlisting' , async(req , res) => {
         const dataBackEnd = req.body ;  // body = accepting data from frontend addListingFormgData
         // const date = new Date() ;
@@ -76,22 +77,73 @@ async function run() {
 
 
 
+    // get specifiq id for listing details
+    app.get("/listingdetails/:id" , async(req3 , res3) => {
+      const id = req3.params;
+      console.log(id) ;
 
-
-    // post
-    app.post('/listingdetails' , async(req3 , res3) => {
-      const dataBackEnd3 = req3.body ; 
-      console.log(dataBackEnd3) ;
-      // insert to database
-      const result3 = await PawsNest_addListings.insertOne(dataBackEnd3) ;
-      res3.send(result3) ;
+      const query = {_id: new ObjectId(id)}; // click kora :id datatbase er _id er shathe match kore dekhbe kontar shathe matched hy
+      const matchedItemm = await PawsNest_addListings.findOne(query)  ;
+      res3.send(matchedItemm) ;
     })
 
-    // get
-    app.get('/listingdetails' , async(req3 , res3) => {
+
+
+
+
+    // post--> order data from listing details page to backend
+    app.post('/listingdetails' , async(req3_1 , res3_1) => {
+      const dataBackEnd3_1 = req3_1.body ; 
+      console.log(dataBackEnd3_1) ;
+      // insert to database
+      const result3_1 = await PawsNest_addListings.insertOne(dataBackEnd3_1) ;
+      res3_1.send(result3_1) ;
+    })
+
+    // get order data
+    app.get('/listingdetails' , async(req3_1 , res3_1) => {
       const resOrderD = await PawsNest_addListings.find().toArray() ;
-      res3.send(resOrderD) ;
+      res3_1.send(resOrderD) ;
     }) 
+
+
+
+
+    // get by email--->my listings page task
+    app.get('/mylistings', async (req4, res4) => {
+    const {email} = req4.query;
+    const query = { email: email };  
+    console.log(query) ;
+    const result4 = await PawsNest_addListings.find(query).toArray();
+    res4.send(result4);
+    })
+
+
+
+
+
+    // update
+    app.put('/updatelistings/:id' , async(req5 , res5) => {
+      const dataBackEnd5 = req5.body ;
+      console.log(dataBackEnd5) ;
+
+      const id = req5.params.id ;
+      const query = {_id: new ObjectId(id)};
+      const updated_Data = {
+        $set: dataBackEnd5  
+      }
+      const result5 = await PawsNest_addListings.updateOne(query , updated_Data) ;
+      res5.send(result5) ;
+    })
+
+
+    // Delete
+    app.delete('/delete/:id' , async(req6 , res6) => {
+      const id = req6.params;
+      const query = {_id: new ObjectId(id)};
+      const result6 = await PawsNest_addListings.deleteOne(query) ;
+      res6.send(result6) ;
+    })
 
 
 
