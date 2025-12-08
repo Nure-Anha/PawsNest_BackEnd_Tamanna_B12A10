@@ -71,7 +71,12 @@ async function run() {
 
     // get
     app.get('/fulldata' ,async(req2 , res2) => {
-      const resultFullD = await PawsNest_addListings.find().toArray() ;
+      const {category} = req2.query ;
+      const query = {} ;
+      if(category) {
+        query.category = category ;
+      }
+      const resultFullD = await PawsNest_addListings.find(query).toArray() ;
       res2.send(resultFullD) ;
     })
 
