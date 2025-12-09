@@ -36,6 +36,7 @@ async function run() {
     // ****************My Part of this copy pasted code from mongo p- 2 = create datatbase on mongo and add data **********************
     const myDatabase = client.db('PawsNest_Database') ; // as like public folder of json file
     const PawsNest_addListings = myDatabase.collection("List_Items") ; // as like xy.json file in public folder
+    const Order_Collections = myDatabase.collection("Order_Items") ; 
 
 
     // ****************My Part of this copy pasted code from mongo p- 1 = data transfer from front to back = Called POST SERVICE **********************
@@ -97,17 +98,17 @@ async function run() {
 
 
     // post--> order data from listing details page to backend
-    app.post('/listingdetails' , async(req3_1 , res3_1) => {
+    app.post('/myorders' , async(req3_1 , res3_1) => {
       const dataBackEnd3_1 = req3_1.body ; 
       console.log(dataBackEnd3_1) ;
       // insert to database
-      const result3_1 = await PawsNest_addListings.insertOne(dataBackEnd3_1) ;
+      const result3_1 = await Order_Collections.insertOne(dataBackEnd3_1) ;
       res3_1.send(result3_1) ;
     })
 
     // get order data
-    app.get('/listingdetails' , async(req3_1 , res3_1) => {
-      const resOrderD = await PawsNest_addListings.find().toArray() ;
+    app.get('/myorders' , async(req3_1 , res3_1) => {
+      const resOrderD = await Order_Collections.find().toArray() ;
       res3_1.send(resOrderD) ;
     }) 
 
