@@ -108,7 +108,10 @@ async function run() {
 
     // get order data
     app.get('/myorders' , async(req3_1 , res3_1) => {
-      const resOrderD = await Order_Collections.find().toArray() ;
+      const email = req3_1.query.email ;
+      console.log("Logged in User's Email:", email);
+      const query = {Email:email} ;  // dtatbase e Email:....
+      const resOrderD = await Order_Collections.find(query).toArray() ;
       res3_1.send(resOrderD) ;
     }) 
 
