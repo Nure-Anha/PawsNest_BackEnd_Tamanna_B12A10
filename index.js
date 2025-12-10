@@ -43,8 +43,8 @@ async function run() {
     // Post Add Listings data to backend 
     app.post('/addlisting' , async(req , res) => {
         const dataBackEnd = req.body ;  // body = accepting data from frontend addListingFormgData
-        // const date = new Date() ;
-        // dataBackEnd.createdAt = date ;
+        const date = new Date() ;
+        dataBackEnd.createdAt = date ;
         console.log(dataBackEnd) ;
 
         // p-2 = transfered data insert into database
@@ -58,6 +58,13 @@ async function run() {
       const result2 = await PawsNest_addListings.find().toArray() ;
       res.send(result2) ;
     })
+
+    // ****** Recent Lisitngs ***************/
+    app.get('/recent', async (reqRL, resRL) => {
+      const resultRL = await PawsNest_addListings.find().sort({ createdAt: -1 }).limit(6).toArray();
+        resRL.send(resultRL);
+    });
+
 
 
     
