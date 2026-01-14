@@ -28,7 +28,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
+    await client.connect();
 
 
 
@@ -160,6 +160,16 @@ async function run() {
       const result6 = await PawsNest_addListings.deleteOne(query) ;
       res6.send(result6) ;
     })
+
+
+    // get 
+    app.get("/stats", async (req, res) => {
+    const totalPets = await PawsNest_addListings.countDocuments();
+    const totalAdoptions = await Order_Collections.countDocuments({Price:0});
+    res.send({ totalPets, totalAdoptions, families:totalAdoptions });
+  });
+
+
 
 
 
