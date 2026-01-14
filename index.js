@@ -41,7 +41,7 @@ async function run() {
 
     // ****************My Part of this copy pasted code from mongo p- 1 = data transfer from front to back = Called POST SERVICE **********************
     // Post Add Listings data to backend 
-    app.post('/addlisting' , async(req , res) => {
+    app.post('/dashboard/addlisting' , async(req , res) => {
         const dataBackEnd = req.body ;  // body = accepting data from frontend addListingFormgData
         const date = new Date() ;
         dataBackEnd.createdAt = date ;
@@ -91,7 +91,7 @@ async function run() {
 
 
     // get specifiq id for listing details
-    app.get("/listingdetails/:id" , async(req3 , res3) => {
+    app.get("/dashboard/updatelistings/:id" , async(req3 , res3) => {
       const id = req3.params;
       console.log(id) ;
 
